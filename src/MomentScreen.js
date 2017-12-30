@@ -1,3 +1,4 @@
+/* @flow */
 import React, {Component} from "react";
 import {View, Text, Dimensions, PixelRatio} from "react-native";
 import {RecyclerListView, DataProvider, LayoutProvider} from "recyclerlistview";
@@ -14,7 +15,7 @@ class CellContainer extends Component {
     }
 }
 
-export default class MomentScreen extends React.Component {
+export default class MomentScreen extends Component {
 
 
     constructor(args) {

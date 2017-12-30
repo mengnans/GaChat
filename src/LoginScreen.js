@@ -35,51 +35,51 @@ export default class LoginScreen extends Component {
 
 
     login = () => {
-        // // hide the keyboard
-        // Keyboard.dismiss();
+        // hide the keyboard
+        Keyboard.dismiss();
+
+        // go to home screen
+        this.props.navigation.navigate('HomeScreen');
+
+        // const HOSTANDPORT = 'http://192.168.191.1:8081';
+        // const REQUEST_URL = HOSTANDPORT + '/login?userName='
+        // + this.userName + '&userPwd=' + this.userPwd;
+        // console.log(REQUEST_URL);
         //
-        // // go to home screen
-        // this.props.navigation.navigate('HomeScreen');
-
-        const HOSTANDPORT = 'http://192.168.191.1:8081';
-        const REQUEST_URL = HOSTANDPORT + '/login?userName='
-        + this.userName + '&userPwd=' + this.userPwd;
-        console.log(REQUEST_URL);
-
-        let request = new XMLHttpRequest();
-        request.onreadystatechange = (e) => {
-            if (request.readyState !== 4) {
-                return;
-            }
-
-            if (request.status === 200) {
-                let response = request.responseText
-                console.log(response);
-                response = JSON.parse(response);
-                let id = response.id;
-
-                // login success
-                if(id != null){
-                    Keyboard.dismiss();
-                    // go to home screen
-                    this.props.navigation.navigate('HomeScreen');
-                }
-                // login failed
-                else {
-                    let errorMsg = response.errorMsg;
-
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show(errorMsg, ToastAndroid.SHORT);
-                    } else if (Platform.OS === 'ios') {
-                        alert(errorMsg);
-                    }
-                }
-            } else {
-                console.warn('error!');
-            }
-        };
-        request.open('GET', REQUEST_URL);
-        request.send();
+        // let request = new XMLHttpRequest();
+        // request.onreadystatechange = (e) => {
+        //     if (request.readyState !== 4) {
+        //         return;
+        //     }
+        //
+        //     if (request.status === 200) {
+        //         let response = request.responseText
+        //         console.log(response);
+        //         response = JSON.parse(response);
+        //         let id = response.id;
+        //
+        //         // login success
+        //         if(id != null){
+        //             Keyboard.dismiss();
+        //             // go to home screen
+        //             this.props.navigation.navigate('HomeScreen');
+        //         }
+        //         // login failed
+        //         else {
+        //             let errorMsg = response.errorMsg;
+        //
+        //             if (Platform.OS === 'android') {
+        //                 ToastAndroid.show(errorMsg, ToastAndroid.SHORT);
+        //             } else if (Platform.OS === 'ios') {
+        //                 alert(errorMsg);
+        //             }
+        //         }
+        //     } else {
+        //         console.warn('error!');
+        //     }
+        // };
+        // request.open('GET', REQUEST_URL);
+        // request.send();
     };
 
     onUsernameChanged = (newUsername) => {

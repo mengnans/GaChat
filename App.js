@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import LoginScreen from './src/LoginScreen.js';
-import HomeScreen from './src/HomeScreen.js';
+import MainScreen from './src/MainScreen.js';
 
 const AppContent = StackNavigator({
     LoginScreen: {
@@ -17,8 +17,8 @@ const AppContent = StackNavigator({
             header: null,
         },
     },
-    HomeScreen: {
-        screen: HomeScreen,
+    MainScreen: {
+        screen: MainScreen,
 
         navigationOptions: {
             headerMode: 'screen',

@@ -25,6 +25,7 @@ export default class LoginScreen extends Component {
         };
     }
 
+    // async load the font
     async componentDidMount() {
         await Font.loadAsync({
             'gloria-halleujah': require('../assets/fonts/GloriaHallelujah.ttf'),
@@ -39,7 +40,7 @@ export default class LoginScreen extends Component {
         Keyboard.dismiss();
 
         // go to home screen
-        this.props.navigation.navigate('HomeScreen');
+        this.props.navigation.navigate('MainScreen');
 
         // const HOSTANDPORT = 'http://192.168.191.1:8081';
         // const REQUEST_URL = HOSTANDPORT + '/login?userName='
@@ -62,7 +63,7 @@ export default class LoginScreen extends Component {
         //         if(id != null){
         //             Keyboard.dismiss();
         //             // go to home screen
-        //             this.props.navigation.navigate('HomeScreen');
+        //             this.props.navigation.navigate('MainScreen');
         //         }
         //         // login failed
         //         else {

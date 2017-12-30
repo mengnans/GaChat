@@ -4,12 +4,12 @@ import {
 } from 'react-native';
 
 
-export default class HomeScreen extends Component {
+export default class ChosenScreen extends Component {
 
     render() {
         return (
             <View style={{flex:1, backgroundColor:this.props.bgColor}}>
-                <Text>Home</Text>
+                <Text>Chat</Text>
             </View>
         );
     }

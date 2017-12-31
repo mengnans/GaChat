@@ -10,6 +10,7 @@ export default class ProfileScreen extends Component {
         return (
             <View style={{flex:1, backgroundColor:this.props.bgColor}}>
                 <Text>Profile</Text>
+                <Text>Profile</Text>
             </View>
         );
     }

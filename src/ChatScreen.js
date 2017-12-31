@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 
 
-export default class ChosenScreen extends Component {
+export default class ChatScreen extends Component {
 
     render() {
         return (

@@ -17,3 +17,17 @@ export default StylesMain = StyleSheet.create({
         backgroundColor: "black",
     },
 });
+
+
+export default Main = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: "center",
+        backgroundColor: "#FF0000",
+    },
+
+    content: {
+        flex: 1,
+        backgroundColor: "black",
+    },
+});

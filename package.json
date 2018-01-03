@@ -22,13 +22,14 @@
   },
   "dependencies": {
     "expo": "^23.0.4",
+    "lodash": "^4.17.4",
     "react": "16.0.0",
     "react-native": "0.50.3",
-    "react-navigation": "^1.0.0-beta.22",
     "react-native-bottom-navigation": "^0.2.0",
     "react-native-material-bottom-navigation": "^0.7.0",
     "react-native-md5": "^1.0.0",
     "react-native-vector-icons": "^4.4.3",
-    "recyclerlistview": "latest"
+    "react-navigation": "^1.0.0-beta.22",
+    "recyclerlistview": "1.2.2"
   }
 }

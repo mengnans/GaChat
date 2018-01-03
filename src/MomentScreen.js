@@ -1,108 +1,104 @@
-/* @flow */
-import React, {Component} from "react";
-import {View, Text, Dimensions, PixelRatio} from "react-native";
-import {RecyclerListView, DataProvider, LayoutProvider} from "recyclerlistview";
+import React, {Component} from 'react';
+import {
+    Image, StyleSheet,
+    Text, View, VirtualizedList,
+} from 'react-native';
+import _isEqual from 'lodash/isEqual';
+import _size from 'lodash/size';
+import _forEach from 'lodash/forEach';
+import _values from 'lodash/values';
+import Moment from './Moment.js'
 
-const ViewTypes = {
-    MOMENT: 0,
-};
-
-
-class CellContainer extends Component {
-
-    render() {
-        return <View {...this.props}>{this.props.children}</View>;
-    }
-}
 
 export default class MomentScreen extends Component {
 
 
-    constructor(args) {
-        super(args);
-
-        let {width} = Dimensions.get("window");
-
-        let data = MomentScreen._generateArray(300);
-
-        //Create the data provider and provide method which takes in two rows of data and return if those two are different or not.
-        //THIS IS VERY IMPORTANT, FORGET PERFORMANCE IF THIS IS MESSED UP
-        let dataProvider = new DataProvider((r1, r2) => {
-            return r1 !== r2;
-        });
+    constructor(props){
+        super(props);
 
 
-        //Create the layout provider
-        //First method: Given an index return the type of item e.g ListItemType1, ListItemType2 in case you have variety of items in your list/grid
-        //Second: Given a type and object set the exact height and width for that type on given object, if you're using non deterministic rendering provide close estimates
-        //If you need data based check you can access your data provider here
-        //You'll need data in most cases, we don't provide it by default to enable things like data virtualization in the future
-        //NOTE: For complex lists LayoutProvider will also be complex it would then make sense to move it to a different file
-        this._layoutProvider = new LayoutProvider(
-            (index) => {
-                return index;
-            },
-            (type, dim, index) => {
+        let _numberOfData = 300;
+        let _data;
 
-                let dataLength = data[index].length;
-                dataLength /= 40;
-                let row = parseInt(dataLength);
+        _data = this._generateData(_numberOfData);
 
-                dim.width = width;
-                dim.height = row * 16.7;
-            }
-        );
-
-        MomentScreen._rowRenderer = MomentScreen._rowRenderer.bind(this);
-
-        //Since component should always render once data has changed, make data provider part of the state
         this.state = {
-            dataProvider: dataProvider.cloneWithRows(data),
-        };
-    }
-
-    static _generateArray(n) {
-
-        let arr = new Array(n);
-        for (let i = 0; i < n; i++) {
-            // arr[i] = i;
-            arr[i] = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
-            arr[i] = '好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw好嘞啊好嘞啊 三分所打翻饭Aowe反而we发件阿瓦吧金佛哇E法诺awe嫩啊;aw'
+            numberOfData: _numberOfData,
+            data : _data,
         }
-
-
-        return arr;
     }
 
 
-    //Given type and data return the view component
-    static _rowRenderer(index, data) {
+    _generateData = (_numberOfData) =>{
+        let _data = Array(_numberOfData);
+        for(let i = 0; i < _numberOfData; i++){
+            let _dataOfRow = {};
+            _dataOfRow.key = i;
+            _dataOfRow.userName = 'user' + i
+            if(i % 13 === 0){
+                _dataOfRow.content = '0123456789';
+            }else{
+                _dataOfRow.content = _data[i - 1].content + '0123456789';
+            }
+            _data[i] = _dataOfRow;
+        }
+        return _data;
 
-
-        return (
-            <CellContainer style={styles.container}>
-                <Text>{data}</Text>
-            </CellContainer>
-        );
-
-    }
+    };
 
     render() {
-        return <RecyclerListView layoutProvider={this._layoutProvider} dataProvider={this.state.dataProvider}
-                                 rowRenderer={MomentScreen._rowRenderer}/>;
+        return (
+            <View style={{flex:1, backgroundColor:this.props.bgColor}}>
+                <MomentList data={this.state.data}/>
+            </View>
+        );
     }
 }
 
 
-const styles = {
+class MomentList extends Component
+{
+    constructor(props)
+    {
+        super(props);
+        this._getItem = this._getItem.bind(this);
+        this._renderRow = this._renderRow.bind(this);
+    }
 
-    container: {
-        justifyContent: "space-around",
-        alignItems: "center",
-        position: 'absolute',
-        backgroundColor: "#af93ff",
-        borderBottomColor: '#47315a',
-        borderBottomWidth: 1 / PixelRatio.get(),
-    },
+    shouldComponentUpdate(nextProps, nextState, nextContext)
+    {
+        return !_isEqual(this.props, nextProps) || !_isEqual(this.state, nextState);
+    }
 
-};
+
+    _getItem(data, index) {
+        return data[index];
+    }
+
+    _renderRow(row)
+    {
+        return(
+            <Moment row={row}/>
+        );
+    }
+
+    render()
+    {
+
+        return (
+            <VirtualizedList
+                keyExtractor={(item) => item.key}
+                data={_values(this.props.data)}
+                renderItem={this._renderRow}
+                getItem={(data,index) => this._getItem(data,index)}
+                getItemCount={(data) => data ? _size(data) : 0}
+                contentContainerStyle={{ flexGrow: 1, overflow: 'hidden' }}
+                showsVerticalScrollIndicator={false}
+                automaticallyAdjustContentInsets={false}
+                removeClippedSubviews={false}
+                enableEmptySections={true}
+            />
+        )
+    }
+}
+

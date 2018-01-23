@@ -4,11 +4,15 @@ import {
     View,
     StatusBar,
     Platform,
+
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import {StackNavigator} from 'react-navigation';
 import LoginScreen from './src/LoginScreen.js';
 import MainScreen from './src/MainScreen.js';
-
+import Router from './src/common/Router';
+import reducers from './src/reducers';
 const AppContent = StackNavigator({
     LoginScreen: {
         screen: LoginScreen,
@@ -35,7 +39,9 @@ export default class App extends Component {
             <View style={styles.container}>
                 <View style={styles.status_bar}/>
                 <AppContent/>
+
             </View>
+
 
         );
     }
